@@ -19,7 +19,7 @@ Enemy.prototype.update = function(dt) {
         enemy.x += enemy.speed*dt;
         if (enemy.x > 480) {
             enemy.x = -80;
-            enemy.speed = Math.random()*240+60;
+            enemy.speed = Math.random()*120+60;
         }
     });
 };
@@ -37,7 +37,7 @@ var Player = function(x,y) {
 };
 
 Player.prototype.update = function(dt) {
-
+    //why is this needed?
 };
 
 Player.prototype.render = function() {
@@ -68,13 +68,32 @@ Player.prototype.reset = function() {
     this.y=380;
 }
 
+//sredi ovo
+function checkCollisions() {
+    player.width = 82;
+    player.height = 82;
+
+    allEnemies.forEach(function(enemy){
+        enemy.width = 82;
+        enemy.height = 82;
+
+        if (player.x < enemy.x + enemy.width &&
+            player.x + player.width > enemy.x &&
+            player.y < enemy.y + enemy.height &&
+            player.y + player.height > enemy.y) {
+            player.reset();
+        }
+    });
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-Evul = new Enemy(0,60);
-Bug = new Enemy(60,140,95);
-Noms = new Enemy(30,220,80);
+//napravi ovo drugačije (foreach enemy y+82 u odnosu na prethodnog, x može da ostane def)
+Evul = new Enemy(0,52);
+Bug = new Enemy(60,134,95);
+Noms = new Enemy(30,216,80);
 var allEnemies = [Evul, Bug, Noms];
 var player = new Player(200,380);
 
