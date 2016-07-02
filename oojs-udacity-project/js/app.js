@@ -8,18 +8,20 @@ var Enemy = function(x,y,speed) {
     if(speed) {
         this.speed = speed;
     } else {
-        this.speed = 5;
+        this.speed = 60;
     }
 
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+    allEnemies.forEach(function(enemy) {
+        enemy.x += enemy.speed*dt;
+        if (enemy.x > 480) {
+            enemy.x = -80;
+            enemy.speed = Math.random()*240+60;
+        }
+    });
 };
 
 Enemy.prototype.render = function() {
@@ -71,10 +73,9 @@ Player.prototype.reset = function() {
 // Place the player object in a variable called player
 
 Evul = new Enemy(0,60);
-Bug = new Enemy(60,140,5);
-Noms = new Enemy(30,220,5);
+Bug = new Enemy(60,140,95);
+Noms = new Enemy(30,220,80);
 var allEnemies = [Evul, Bug, Noms];
-
 var player = new Player(200,380);
 
 
