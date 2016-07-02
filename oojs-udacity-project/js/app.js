@@ -35,9 +35,9 @@ var Player = function(x,y) {
     this.sprite = 'images/char-cat-girl.png';
 
 };
-    //why is this needed?
-Player.prototype.update = function(dt) {
 
+Player.prototype.update = function(dt) {
+    //why is this needed?
 };
 
 Player.prototype.render = function() {
