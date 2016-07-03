@@ -30,9 +30,9 @@ Enemy.prototype.render = function() {
 };
 
 //Player
-var Player = function(x,y) {
-    this.x = x;
-    this.y = y;
+var Player = function() {
+    this.x = 200;
+    this.y = 380;
     this.width = 82;
     this.height = 82;
     this.sprite = 'images/char-cat-girl.png';
@@ -55,18 +55,18 @@ Player.prototype.handleInput = function(key) {
                 this.score();
                 this.reset();
             }
-        break;
+            break;
         case 'down':
             if(this.y < 380) this.y+=82;
-        break;
+            break;
         case 'left':
             if(this.x > 0) this.x-=100;
-        break;
+            break;
         case 'right':
             if(this.x < 400) this.x+=100;
-        break;
+            break;
         default:
-        break;
+            break;
     }
 };
 
@@ -79,6 +79,7 @@ Player.prototype.score = function() {
 }
 
 Player.prototype.reset = function() {
+    this.x=200;
     this.y=380;
 }
 
@@ -102,7 +103,7 @@ Evul = new Enemy(0,52);
 Bug = new Enemy(60,134,95);
 Noms = new Enemy(30,216,80);
 var allEnemies = [Evul, Bug, Noms];
-var player = new Player(200,380);
+var player = new Player();
 
 
 // This listens for key presses and sends the keys to your
