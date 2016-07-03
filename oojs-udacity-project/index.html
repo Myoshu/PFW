@@ -8,10 +8,21 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <section class="game-menu">
+        <p>Choose a character:</p>
+        <div class="player-images" id="player-images">
+            <img src="images/char-boy.png" onclick="player.setImage(this)"/>
+            <img src="images/char-cat-girl.png" onclick="player.setImage(this)"/>
+            <img src="images/char-horn-girl.png" onclick="player.setImage(this)"/>
+            <img src="images/char-pink-girl.png" onclick="player.setImage(this)"/>
+            <img src="images/char-princess-girl.png" onclick="player.setImage(this)"/>
+        </div>
+    </section>
+    <section class="game-canvas"></section>
+    <div class="count-wins">0</div>
+
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
-
-    <div class="count-wins">0</div>
 </body>
 </html>

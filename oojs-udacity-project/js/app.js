@@ -36,7 +36,6 @@ var Player = function() {
     this.width = 82;
     this.height = 82;
     this.sprite = 'images/char-cat-girl.png';
-
 };
 
 Player.prototype.update = function(dt) {
@@ -46,6 +45,12 @@ Player.prototype.update = function(dt) {
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+Player.prototype.setImage = function(image) {
+    this.sprite = image.getAttribute("src");
+
+    console.log(this.sprite);
+}
 
 Player.prototype.handleInput = function(key) {
     switch(key) {

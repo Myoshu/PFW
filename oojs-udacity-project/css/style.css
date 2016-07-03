@@ -2,6 +2,26 @@ body {
     font-family: "Roboto", sans-serif;
     text-align: center;
 }
+.pull-left {
+    float: left;
+}
+.game-menu {
+   /* width: 200px;*/
+    margin: 0 auto;
+}
+.player-images {
+    /*overflow-y: scroll;*/
+}
+.player-images img {
+    /*display: block;*/
+}
+.player-images img:hover {
+    cursor: pointer;
+    background: aliceblue;
+}
+.game-canvas {
+    margin-top: -50px;
+}
 .count-wins {
     font-size: 35px;
     color: #646460
