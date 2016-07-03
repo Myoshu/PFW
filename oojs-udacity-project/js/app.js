@@ -2,7 +2,8 @@
 var Enemy = function(x,y,speed) {
     this.x = x;
     this.y = y;
-
+    this.width = 82;
+    this.height = 82;
     //if speed does not exists set def speed
     //do that for the position also?
     if(speed) {
@@ -32,6 +33,8 @@ Enemy.prototype.render = function() {
 var Player = function(x,y) {
     this.x = x;
     this.y = y;
+    this.width = 82;
+    this.height = 82;
     this.sprite = 'images/char-cat-girl.png';
 
 };
@@ -70,13 +73,7 @@ Player.prototype.reset = function() {
 
 //sredi ovo
 function checkCollisions() {
-    player.width = 82;
-    player.height = 82;
-
     allEnemies.forEach(function(enemy){
-        enemy.width = 82;
-        enemy.height = 82;
-
         if (player.x < enemy.x + enemy.width &&
             player.x + player.width > enemy.x &&
             player.y < enemy.y + enemy.height &&
