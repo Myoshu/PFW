@@ -1,3 +1,8 @@
 body {
+    font-family: "Roboto", sans-serif;
     text-align: center;
+}
+.count-wins {
+    font-size: 35px;
+    color: #646460
 }

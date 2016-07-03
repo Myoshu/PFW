@@ -51,7 +51,10 @@ Player.prototype.handleInput = function(key) {
     switch(key) {
         case 'up':
             if(this.y > -30) this.y-=82;
-            if(this.y == -30) this.reset();
+            if(this.y == -30) {
+                this.score();
+                this.reset();
+            }
         break;
         case 'down':
             if(this.y < 380) this.y+=82;
@@ -67,11 +70,18 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
+Player.prototype.score = function() {
+    var div = document.getElementsByClassName("count-wins")[0];
+    var score = parseInt(div.innerHTML);
+
+    score+=1;
+    div.innerHTML = score;
+}
+
 Player.prototype.reset = function() {
     this.y=380;
 }
 
-//sredi ovo
 function checkCollisions() {
     allEnemies.forEach(function(enemy){
         if (player.x < enemy.x + enemy.width &&
