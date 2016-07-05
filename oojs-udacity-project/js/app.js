@@ -48,8 +48,6 @@ Player.prototype.render = function() {
 
 Player.prototype.setImage = function(image) {
     this.sprite = image.getAttribute("src");
-
-    console.log(this.sprite);
 }
 
 Player.prototype.handleInput = function(key) {
@@ -83,9 +81,41 @@ Player.prototype.score = function() {
     div.innerHTML = score;
 }
 
+Player.prototype.points = function() {
+    var div = document.getElementsByClassName("count-points")[0];
+    var points = parseInt(div.innerHTML);
+
+    points+=100;
+    div.innerHTML = points;
+}
+
 Player.prototype.reset = function() {
     this.x=200;
     this.y=380;
+}
+
+var Gem = function(x,y) {
+    this.x = x;
+    this.y = y;
+    this.width = 82;
+    this.height = 82;
+    this.sprite = 'images/Gem Blue.png';
+}
+
+Gem.prototype.update = function() {
+
+}
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Gem.prototype.destroy = function() {
+    var index = allGems.indexOf(this);
+    if (index > -1) {
+        allGems.splice(index, 1);
+    }
+    //ctx.clearRect(this.x, this.y, this.width, this.height);
 }
 
 function checkCollisions() {
@@ -97,6 +127,16 @@ function checkCollisions() {
             player.reset();
         }
     });
+
+    allGems.forEach(function(gem){
+        if (player.x < gem.x + gem.width &&
+            player.x + player.width > gem.x &&
+            player.y < gem.y + gem.height &&
+            player.y + player.height > gem.y) {
+            gem.destroy();
+            player.points();
+        }
+    });
 }
 
 // Now instantiate your objects.
@@ -104,9 +144,12 @@ function checkCollisions() {
 // Place the player object in a variable called player
 
 //napravi ovo drugačije (foreach enemy y+82 u odnosu na prethodnog, x može da ostane def)
+var blue = new Gem(101, 130);
+var green = new Gem(80,200);
 Evul = new Enemy(0,52);
 Bug = new Enemy(60,134,95);
 Noms = new Enemy(30,216,80);
+var allGems = [blue, green];
 var allEnemies = [Evul, Bug, Noms];
 var player = new Player();
 
