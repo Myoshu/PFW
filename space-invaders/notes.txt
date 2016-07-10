@@ -1,0 +1,37 @@
+Proces pravljenja
+
+- Potrebni elementi:
+    good ship
+    evil ships (diff)
+    shooting image
+    stuff that falls from the ships
+    score
+    lives
+    background
+    different weapon types?
+    shield?
+- Klase:
+    Player
+    Enemy
+    Stuff that falls from the sky (Goods)
+- Player:
+    koordinate
+    kretanje
+    pucanje
+    score
+    lives (+/-)
+    weapon type
+- Enemies:
+    koordinate
+    kretanje
+    random pucanje
+    uništavanje
+- Goods
+    da li Enemy ima Goods pa se po uništavanju random odluči da li nešto pada ili ne?
+
+
+
+    sleepy.
+
+
+
