@@ -81,11 +81,11 @@ Player.prototype.score = function() {
     div.innerHTML = score;
 }
 
-Player.prototype.points = function() {
+Player.prototype.points = function(addPoints) {
     var div = document.getElementsByClassName("count-points")[0];
     var points = parseInt(div.innerHTML);
 
-    points+=100;
+    points+=addPoints;
     div.innerHTML = points;
 }
 
@@ -94,12 +94,27 @@ Player.prototype.reset = function() {
     this.y=380;
 }
 
-var Gem = function(x,y) {
+var Gem = function(x,y,image) {
     this.x = x;
     this.y = y;
     this.width = 82;
     this.height = 82;
-    this.sprite = 'images/Gem Blue.png';
+    this.imageIndex = image;
+
+    switch(image) {
+        case 1:
+            this.sprite = 'images/Gem Blue.png';
+            break;
+        case 2:
+            this.sprite = 'images/Gem Green.png';
+            break;
+        case 3:
+            this.sprite = 'images/Gem Orange.png';
+            break;
+        default:
+            this.sprite = 'images/Gem Blue.png';
+            break;
+    }
 }
 
 Gem.prototype.update = function() {
@@ -113,27 +128,45 @@ Gem.prototype.render = function() {
 Gem.prototype.create = function() {
     var x = gemCoordinates[0][Math.floor(Math.random()*gemCoordinates[0].length)];
     var y = gemCoordinates[1][Math.floor(Math.random()*gemCoordinates[1].length)];
-    var gem = new Gem(x,y);
+    var image = Math.floor(Math.random()*3+1);
+
+    var gem = new Gem(x,y,image);
     allGems.push(gem);
 }
 
 Gem.prototype.destroy = function() {
     var index = allGems.indexOf(this);
+    var imageIndex = this.imageIndex;
+
     if (index > -1) {
         allGems.splice(index, 1);
     }
-    //ctx.clearRect(this.x, this.y, this.width, this.height);
+
+    return imageIndex;
 }
 
 function checkCollisions() {
+    var count, points;
+
     allGems.forEach(function(gem){
         if (player.x < gem.x + gem.width &&
             player.x + player.width > gem.x &&
             player.y < gem.y + gem.height &&
             player.y + player.height > gem.y) {
-            gem.destroy();
+            count = gem.destroy();
             gem.create();
-            player.points();
+
+            switch(count) {
+                case 1: points = 100;
+                    break;
+                case 2: points = 200;
+                    break;
+                case 3: points = 300;
+                    break;
+                default: points = 100;
+                    break;
+            }
+            player.points(points);
         }
     });
 
@@ -157,8 +190,8 @@ var gemCoordinates = [
 ];
 
 /*default gems, može i ovo na rand*/
-var blue = new Gem(101, 130);
-var green = new Gem(303,212);
+var blue = new Gem(101, 130, 1);
+var green = new Gem(303,212, 2);
 
 //napravi ovo drugačije (foreach enemy y+82 u odnosu na prethodnog, x može da ostane def)
 Evul = new Enemy(0,52);
