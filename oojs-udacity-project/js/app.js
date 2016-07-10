@@ -36,6 +36,11 @@ var Player = function() {
     this.width = 82;
     this.height = 82;
     this.sprite = 'images/char-cat-girl.png';
+
+    /*interesantno*/
+    /*var heartsCollection = document.getElementById("hearts").getElementsByTagName("img");
+    this.hearts = Array.prototype.slice.call(heartsCollection);
+    console.log(this.hearts);*/
 };
 
 Player.prototype.update = function(dt) {
@@ -55,7 +60,7 @@ Player.prototype.handleInput = function(key) {
         case 'up':
             if(this.y > -30) this.y-=82;
             if(this.y == -30) {
-                this.score();
+                this.score(1);
                 this.reset();
             }
             break;
@@ -73,11 +78,16 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-Player.prototype.score = function() {
+Player.prototype.score = function(arg) {
     var div = document.getElementsByClassName("count-wins")[0];
     var score = parseInt(div.innerHTML);
 
-    score+=1;
+    if(arg) {
+        score += 1;
+    } else {
+        score = 0;
+    }
+
     div.innerHTML = score;
 }
 
@@ -85,8 +95,23 @@ Player.prototype.points = function(addPoints) {
     var div = document.getElementsByClassName("count-points")[0];
     var points = parseInt(div.innerHTML);
 
-    points+=addPoints;
+    if(addPoints) {
+        points+=addPoints;
+    } else {
+        points = 0;
+    }
+
     div.innerHTML = points;
+}
+
+/*append onoliko srca koliko kažem da igrač ima*/
+Player.prototype.removeHeart = function() {
+    var hearts = document.getElementById("hearts");
+    if(hearts.children.length > 0) {
+        hearts.removeChild(hearts.lastElementChild);
+    } else {
+        resetGame();
+    }
 }
 
 Player.prototype.reset = function() {
@@ -126,8 +151,11 @@ Gem.prototype.render = function() {
 };
 
 Gem.prototype.create = function() {
-    var x = gemCoordinates[0][Math.floor(Math.random()*gemCoordinates[0].length)];
-    var y = gemCoordinates[1][Math.floor(Math.random()*gemCoordinates[1].length)];
+    function calculateCoordinate(arg) {
+        return gemCoordinates[arg][Math.floor(Math.random()*gemCoordinates[arg].length)];
+    }
+    var x = calculateCoordinate(0);
+    var y = calculateCoordinate(1);
     var image = Math.floor(Math.random()*3+1);
 
     var gem = new Gem(x,y,image);
@@ -176,10 +204,17 @@ function checkCollisions() {
             player.y < enemy.y + enemy.height &&
             player.y + player.height > enemy.y) {
             player.reset();
+            player.removeHeart();
         }
     });
 }
 
+var resetGame = function() {
+    document.getElementById("gameover").style.display = "block";
+    player.reset();
+    player.score(0);
+    player.points(0);
+}
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -197,6 +232,7 @@ var green = new Gem(303,212, 2);
 Evul = new Enemy(0,52);
 Bug = new Enemy(60,134,95);
 Noms = new Enemy(30,216,80);
+
 var allGems = [blue, green];
 var allEnemies = [Evul, Bug, Noms];
 var player = new Player();

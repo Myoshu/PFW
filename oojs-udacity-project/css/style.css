@@ -1,8 +1,11 @@
+* {
+    margin: 0;
+}
 body {
     font-family: "Roboto", sans-serif;
     text-align: center;
 }
-.pull-left {
+.float-left {
     float: left;
 }
 .game-menu {
@@ -25,4 +28,22 @@ body {
 .count-wins {
     font-size: 35px;
     color: #646460
+}
+.count-hearts img {
+    width: 50px;
+}
+.gameover {
+    display: none;
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    width: 100vw;
+    height: 100vh;
+}
+.gameover p {
+    color: #fff;
+    font-size: 40px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
 }
