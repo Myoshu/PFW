@@ -110,6 +110,13 @@ Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+Gem.prototype.create = function() {
+    var x = gemCoordinates[0][Math.round(Math.random()*gemCoordinates[0].length)];
+    var y = gemCoordinates[1][Math.round(Math.random()*gemCoordinates[1].length)];
+    var gem = new Gem(x,y);
+    allGems.push(gem);
+}
+
 Gem.prototype.destroy = function() {
     var index = allGems.indexOf(this);
     if (index > -1) {
@@ -134,6 +141,7 @@ function checkCollisions() {
             player.y < gem.y + gem.height &&
             player.y + player.height > gem.y) {
             gem.destroy();
+            gem.create();
             player.points();
         }
     });
@@ -143,9 +151,16 @@ function checkCollisions() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-//napravi ovo drugačije (foreach enemy y+82 u odnosu na prethodnog, x može da ostane def)
+var gemCoordinates = [
+    [0,101,202,303,404],
+    [48,130,212]
+];
+
+/*default gems, može i ovo na rand*/
 var blue = new Gem(101, 130);
-var green = new Gem(80,200);
+var green = new Gem(303,212);
+
+//napravi ovo drugačije (foreach enemy y+82 u odnosu na prethodnog, x može da ostane def)
 Evul = new Enemy(0,52);
 Bug = new Enemy(60,134,95);
 Noms = new Enemy(30,216,80);
@@ -157,12 +172,12 @@ var player = new Player();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
+    e.preventDefault();
     var allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
