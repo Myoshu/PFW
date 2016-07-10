@@ -111,8 +111,8 @@ Gem.prototype.render = function() {
 };
 
 Gem.prototype.create = function() {
-    var x = gemCoordinates[0][Math.round(Math.random()*gemCoordinates[0].length)];
-    var y = gemCoordinates[1][Math.round(Math.random()*gemCoordinates[1].length)];
+    var x = gemCoordinates[0][Math.floor(Math.random()*gemCoordinates[0].length)];
+    var y = gemCoordinates[1][Math.floor(Math.random()*gemCoordinates[1].length)];
     var gem = new Gem(x,y);
     allGems.push(gem);
 }
@@ -126,15 +126,6 @@ Gem.prototype.destroy = function() {
 }
 
 function checkCollisions() {
-    allEnemies.forEach(function(enemy){
-        if (player.x < enemy.x + enemy.width &&
-            player.x + player.width > enemy.x &&
-            player.y < enemy.y + enemy.height &&
-            player.y + player.height > enemy.y) {
-            player.reset();
-        }
-    });
-
     allGems.forEach(function(gem){
         if (player.x < gem.x + gem.width &&
             player.x + player.width > gem.x &&
@@ -143,6 +134,15 @@ function checkCollisions() {
             gem.destroy();
             gem.create();
             player.points();
+        }
+    });
+
+    allEnemies.forEach(function(enemy){
+        if (player.x < enemy.x + enemy.width &&
+            player.x + player.width > enemy.x &&
+            player.y < enemy.y + enemy.height &&
+            player.y + player.height > enemy.y) {
+            player.reset();
         }
     });
 }
