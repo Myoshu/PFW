@@ -36,7 +36,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        player.update(dt);
     }
 
     function render() {
@@ -52,8 +52,6 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[0]), col * 100, row * 100);
             }
         }
-
-        /*na ovaj način nacrtati enemies?*/
 
         renderEntities();
     }
