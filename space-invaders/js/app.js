@@ -16,8 +16,11 @@ Enemy.prototype.render = function() {
 var Player = function() {
     this.x = 450;
     this.y = 700;
+    this.width = 100;
+    this.height = 100;
     this.speed = 5;
     this.sprite = 'images/Blue/alienship_new_small.png';
+    this.bullets = [];
 };
 
 Player.prototype.update = function (dt) {
@@ -26,7 +29,7 @@ Player.prototype.update = function (dt) {
 };
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 100, 100);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
 }
 
 Player.prototype.handleInput = function(key) {
@@ -45,9 +48,41 @@ Player.prototype.handleInput = function(key) {
         }
         moveTimeout = setTimeout(loop, 1000/60, key);
     }
+
+    if(key === 'fire') {
+        player.bullets.push(new Bullet(this.x, this.y, this.width));
+        console.log(player.bullets);
+    }
 }
 Player.prototype.move = function (offset) {
     this.x = this.x+offset;
+}
+
+var Bullet = function(x, y, width) {
+    this.width = 20;
+    this.height = 20;
+    this.x = x+(width/2)-this.width/2-2;
+    this.y = y-this.height;
+    this.speed = 300;
+    this.sprite = 'images/Blue/bullet.png';
+}
+
+Bullet.prototype.update = function(dt) {
+    this.y-=this.speed*dt;
+    this.collisions();
+}
+
+Bullet.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
+}
+
+Bullet.prototype.destroy = function() {
+    player.bullets.splice(this, 1);
+}
+
+Bullet.prototype.collisions = function() {
+    if(this.y<0) this.destroy();
+    //console.log(player.bullets);
 }
 
 var enemiesCols = 8;
@@ -69,8 +104,8 @@ var player = new Player();
 
 var moveTimeout = -1;
 document.addEventListener('keydown', function(e) {
-    e.preventDefault();
     var allowedKeys = {
+        32: 'fire',
         37: 'left',
         39: 'right'
     };
@@ -78,7 +113,6 @@ document.addEventListener('keydown', function(e) {
 });
 
 document.addEventListener('keyup', function(e) {
-    e.preventDefault();
     clearTimeout(moveTimeout);
     moveTimeout = -1;
 });

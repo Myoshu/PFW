@@ -34,9 +34,12 @@ var Engine = (function(global) {
 
      function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+         enemy.update(dt);
         });
         player.update(dt);
+        player.bullets.forEach(function(bullet) {
+           bullet.update(dt);
+        });
     }
 
     function render() {
@@ -66,6 +69,9 @@ var Engine = (function(global) {
         });
 
         player.render();
+        player.bullets.forEach(function(bullet) {
+            bullet.render();
+        });
     }
 
     function reset() {
@@ -75,7 +81,8 @@ var Engine = (function(global) {
     Resources.load([
         'images/background.jpg',
         'images/Red/alienship_new_red_try.png',
-        'images/Blue/alienship_new_small.png'
+        'images/Blue/alienship_new_small.png',
+        'images/Blue/bullet.png'
     ]);
     Resources.onReady(init);
 
