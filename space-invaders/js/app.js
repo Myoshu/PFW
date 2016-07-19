@@ -1,6 +1,8 @@
 var Enemy = function(x,y) {
     this.x = x;
     this.y = y;
+    this.width = 100;
+    this.height = 100;
     this.speed = 10;
     this.sprite = 'images/Red/alienship_new_red_try.png';
 };
@@ -10,9 +12,15 @@ Enemy.prototype.update = function(dt) {
 };
 
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 100, 100);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
 };
 
+Enemy.prototype.destroy = function() {
+    var index = allEnemies.indexOf(this);
+    if (index > -1) {
+        allEnemies.splice(index, 1);
+    }
+}
 var Player = function() {
     this.x = 450;
     this.y = 700;
@@ -41,17 +49,16 @@ Player.prototype.handleInput = function(key) {
         if (player.x < 0) player.x = 0;
         if(player.x>900) player.x=900;
 
-        if(key==="left") {
+        if(key[37]) {
             player.move(-player.speed);
-        } else if (key==="right"){
+        }
+        if (key[39]){
             player.move(+player.speed);
         }
         moveTimeout = setTimeout(loop, 1000/60, key);
     }
-
-    if(key === 'fire') {
-        player.bullets.push(new Bullet(this.x, this.y, this.width));
-        console.log(player.bullets);
+    if(key[32]) { /*ograniči bullets*/
+        player.bullets.push(new Bullet(player.x, player.y, player.width));
     }
 }
 Player.prototype.move = function (offset) {
@@ -82,7 +89,17 @@ Bullet.prototype.destroy = function() {
 
 Bullet.prototype.collisions = function() {
     if(this.y<0) this.destroy();
-    //console.log(player.bullets);
+    allEnemies.forEach(function(enemy) {
+        player.bullets.forEach(function(bullet) {
+            if (bullet.x < enemy.x + enemy.width &&
+                bullet.x + bullet.width > enemy.x &&
+                bullet.y < enemy.y + enemy.height &&
+                bullet.y + bullet.height > enemy.y) {
+                bullet.destroy();
+                enemy.destroy();
+            }
+        });
+    });
 }
 
 var enemiesCols = 8;
@@ -103,16 +120,20 @@ for(var i=0; i<enemiesRows; i++) {
 var player = new Player();
 
 var moveTimeout = -1;
-document.addEventListener('keydown', function(e) {
-    var allowedKeys = {
-        32: 'fire',
-        37: 'left',
-        39: 'right'
-    };
-    player.handleInput(allowedKeys[e.keyCode]);
-});
+var key = [];
+window.onkeydown = window.onkeyup = function (e) {
+    var allowedKeys = [32,37,39];
+    var e = e || event;
 
-document.addEventListener('keyup', function(e) {
+    allowedKeys.forEach(function(allowed) {
+        if(e.keyCode === allowed) {
+            key[e.keyCode] = e.type == "keydown";
+            player.handleInput(key);
+        }
+    });
+}
+
+document.addEventListener('keyup', function() {
     clearTimeout(moveTimeout);
     moveTimeout = -1;
 });
