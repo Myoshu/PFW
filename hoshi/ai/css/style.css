@@ -3,3 +3,12 @@ body {
     overflow: hidden;
     cursor: url("../images/cursor.png"), default;
 }
+
+path {
+    stroke-linejoin: round;
+}
+
+.graticule {
+    //stroke: #fff;
+    stroke: none;
+}
