@@ -1,0 +1,138 @@
+
+/*
+var ttp = d3.select("body").append("div")   //dodajemo div koji sluzi kao tooltip kada mouseoverujemo
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+
+svg.selectAll("line")
+    .data(dataset2)
+    .enter()
+    .append("line")
+    .attr("x1", function(d) {
+        return dataset [d[0]][0]; //lolz
+    })
+    .attr("y1", function(d) {
+        return dataset [d[0]][1]; //lolz
+    })
+    .attr("x2", function(d) {
+        return dataset [d[1]][0]; //lolz
+    })
+    .attr("y2", function(d) {
+        return dataset [d[1]][1]; //lolz
+    })
+    .attr("stroke", "#00D5FF") //ova boja treba biti ista kao i mouseout boja
+    .attr("id",function(d) { // doodajem id svakoj liniji koju nacrtam, id je treci element niza u dataset2
+        return d[2];
+    })
+    .on("mouseover",function(d){ //event kada mouseoverujem bilo koju od linija
+        svg.selectAll("#"+d[2]) // selektujem sve elemente koji imaju ovaj id
+            .transition()
+            .duration(1000)
+            .attr("stroke", "#FFEA00");
+
+        ttp.transition()
+            .duration(200)
+            .style("opacity", .8);
+        ttp.html(d[2])
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY + 20) + "px"); // tooltip se pojavljuje i prikazuje na mestu kursora
+    })
+    .on("mouseout",function(d){
+
+        svg.selectAll("#"+d[2])
+            .transition()
+            .delay(1000)
+            .attr("stroke", "#00D5FF"); // vracam boju na normalno
+
+        ttp.transition()
+            .delay(1000)
+            .duration(1000)
+            .style("opacity", 0);  // sakrivam tooltip
+    });
+
+
+var t = 1000;
+
+
+svg.selectAll("polygon")
+    .data(dataset)
+    .enter()
+    .append("polygon")
+    .attr("fill", function(d) {
+        return "rgb("+ d[2]*(d[2]+30) +",200, 255)";
+    })
+    .attr("stroke-width", function(d) {
+        return 0.5;
+    })
+    .attr("stroke",function(d){
+        return "red";
+    })
+    .attr("points", function(d) {
+        var array = String(
+            (d[0]-3*(d[2]/3))+", "+(d[1])+" \n"+
+            (d[0]-1*(d[2]/3))+", "+(d[1]-1*(d[2]/3))+" \n"+
+            (d[0])+", "+(d[1]-3*(d[2]/3))+" \n"+
+            (d[0]+1*(d[2]/3))+", "+(d[1]-1*(d[2]/3)) +" \n"+
+            (d[0]+3*(d[2]/3))+", "+(d[1]) +" \n"+
+            (d[0]+1*(d[2]/3))+", "+(d[1]+1*(d[2]/3)) +" \n"+
+            (d[0])+", "+(d[1]+3*(d[2]/3)) +" \n"+
+            (d[0]-1*(d[2]/3))+", "+(d[1]+1) +" \n"
+        );
+        return array; // objasnjenje je ovde http://i.imgur.com/TeoyYr2.png ( d[0] je x, d[1] je y, d[2] je radius)
+    })
+
+var rt=0;
+function prelaz() {
+
+    t= Math.random()*2000+1000; // vreme izmedju 1 i 3 sekunde
+
+    svg.selectAll("polygon")
+        .transition()
+        .duration (t)
+        .attr("stroke","rgba(255,200,0,0.3)")
+        .attr("stroke-width", "4")
+        .transition()
+        .delay (t)
+        .duration(t+t)
+        .attr("stroke", "rgba(255,200,0,0.1)")
+        .attr("stroke-width", "2") // osciluje izmedju stroke-ova
+
+    setTimeout(function() { prelaz();}, t*3);
+
+}
+
+function rotacija(){
+    svg.selectAll("line, polygon")
+        .attr("transform","rotate("+rt+" 450 450)")
+    rt+=0.05;
+    if(rt>=359.5)
+        rt=0;
+}
+
+setInterval(function(){rotacija();},50);
+prelaz();
+		*/
+
+		/*
+        svg.selectAll("polygon")
+            .data(dataset)
+            .enter()
+            .append("polygon")
+                    d.color        .attr("fill", function(d) {
+
+            })
+            .attr("points", function (d) {
+                var array = String(
+                    (d.galX-3*(d.galZ/3))+", "+(d.galY)+" \n"+
+                    (d.galX-1*(d.galZ/3))+", "+(d.galY-1*(d.galZ/3))+" \n"+
+                    (d.galX)+", "+(d.galY-3*(d.galZ/3))+" \n"+
+                    (d.galX+1*(d.galZ/3))+", "+(d.galY-1*(d.galZ/3)) +" \n"+
+                    (d.galX+3*(d.galZ/3))+", "+(d.galY) +" \n"+
+                    (d.galX+1*(d.galZ/3))+", "+(d.galY+1*(d.galZ/3)) +" \n"+
+                    (d.galX)+", "+(d.galY+3*(d.galZ/3)) +" \n"+
+                    (d.galX-1*(d.galZ/3))+", "+(d.galY+1) +" \n"
+                );
+                return array;
+            })
+            .attr("id", dataset.id)*/

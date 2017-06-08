@@ -1,0 +1,19 @@
+body {
+    background: #111;
+    overflow: hidden;
+    cursor: url("../images/cursor.png"), default;
+}
+path {
+    fill: none;
+    stroke-linejoin: round;
+}
+
+.sphere,
+.graticule {
+    stroke: #aaa;
+}
+
+.equator {
+    stroke: red;
+    stroke-width: 2px;
+}
